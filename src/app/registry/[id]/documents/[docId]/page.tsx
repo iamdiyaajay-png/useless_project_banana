@@ -50,16 +50,15 @@ export default async function DocumentViewerPage({ params }: { params: Promise<{
       break;
     case 'COMPLETE_FILE':
       TemplateContent = (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
-          {/* We render all of them stacked for the complete file */}
-          <div className="page-break" style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
-            <h1 style={{ fontSize: '3rem', color: 'var(--gov-blue)' }}>PAZAMAYI SHERIYAYI</h1>
-            <h2 style={{ fontSize: '2rem', letterSpacing: '2px' }}>COMPLETE BANANA RECORD</h2>
-            <div style={{ marginTop: '40px', fontSize: '1.2rem', textAlign: 'left', border: '2px solid var(--border-color)', padding: '24px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+          <div className="page-break" style={{ minHeight: '80vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', padding: '24px' }}>
+            <h1 style={{ fontSize: 'clamp(1.8rem, 5vw, 2.8rem)', color: 'var(--gov-blue)' }}>PAZAMAYI SHERIYAYI</h1>
+            <h2 style={{ fontSize: 'clamp(1.2rem, 3.5vw, 1.8rem)', letterSpacing: '2px' }}>COMPLETE BANANA DOSSIER</h2>
+            <div style={{ marginTop: '24px', fontSize: '1rem', textAlign: 'left', border: '2px solid var(--border-color)', padding: '20px', borderRadius: '8px', maxWidth: '500px', width: '100%' }}>
               <p><strong>Banana:</strong> {banana.officialName}</p>
-              <p><strong>Banana ID:</strong> {banana.id}</p>
-              <p><strong>File Reference:</strong> {document.documentNumber}</p>
-              <p><strong>Status:</strong> {document.status}</p>
+              <p><strong>Banana ID:</strong> <span style={{ fontFamily: 'monospace', wordBreak: 'break-all' }}>{banana.id}</span></p>
+              <p><strong>File Reference:</strong> <span style={{ fontFamily: 'monospace' }}>{document.documentNumber}</span></p>
+              <p><strong>Status:</strong> <span style={{ color: 'var(--status-green)', fontWeight: 'bold' }}>{document.status}</span></p>
             </div>
           </div>
           <div className="page-break"><BanadhaarTemplate banana={banana} document={document} /></div>
@@ -76,20 +75,31 @@ export default async function DocumentViewerPage({ params }: { params: Promise<{
   }
 
   return (
-    <div>
-      <div className="hide-on-print" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '24px', backgroundColor: '#fff', padding: '16px', border: '1px solid var(--border-color)', borderRadius: '4px' }}>
-        <div>
-          <Link href={`/registry/${id}/documents`} style={{ color: 'var(--gov-blue)', textDecoration: 'none', fontWeight: 'bold' }}>
+    <div style={{ maxWidth: '900px', margin: '0 auto', width: '100%' }}>
+      <div className="hide-on-print" style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center',
+        marginBottom: '20px', 
+        backgroundColor: '#fff', 
+        padding: '14px 18px', 
+        border: '1px solid var(--border-color)', 
+        borderRadius: 'var(--radius-md)',
+        flexWrap: 'wrap',
+        gap: '12px'
+      }}>
+        <div style={{ minWidth: 0, flex: 1 }}>
+          <Link href={`/registry/${id}/documents`} style={{ color: 'var(--gov-blue)', textDecoration: 'none', fontWeight: 'bold', fontSize: '0.88rem' }}>
             ← Back to Vault
           </Link>
-          <div style={{ marginTop: '8px', fontSize: '1.2rem', fontWeight: 'bold' }}>Viewing: {document.documentNumber}</div>
+          <div style={{ marginTop: '4px', fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', fontWeight: 'bold', wordBreak: 'break-all' }}>Viewing: {document.documentNumber}</div>
         </div>
         <div>
           <PrintAction bananaId={id} documentType={document.documentType} />
         </div>
       </div>
 
-      <div className="document-container" style={{ margin: '0 auto', maxWidth: '800px', backgroundColor: '#fff', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', padding: '0', minHeight: '1000px', position: 'relative' }}>
+      <div className="document-container" style={{ margin: '0 auto', width: '100%', backgroundColor: '#fff', boxShadow: 'var(--shadow-md)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
         {TemplateContent}
       </div>
     </div>

@@ -13,7 +13,7 @@ export function PrintAction({ bananaId, documentType }: { bananaId: string, docu
   return (
     <button 
       onClick={handlePrint}
-      style={{ padding: '12px 24px', backgroundColor: 'var(--gov-blue)', color: '#fff', border: 'none', borderRadius: '4px', fontWeight: 'bold', fontSize: '1rem', cursor: 'pointer' }}
+      style={{ padding: '12px 24px', backgroundColor: 'var(--gov-blue)', color: '#fff', border: 'none', borderRadius: '4px', fontWeight: 'bold', fontSize: '1rem', cursor: 'pointer', minHeight: '44px', maxWidth: '100%' }}
     >
       DOWNLOAD PDF / PRINT 🖨️
     </button>

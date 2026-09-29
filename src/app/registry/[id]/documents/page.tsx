@@ -37,28 +37,28 @@ export default async function DocumentVaultPage({ params }: { params: Promise<{ 
   ];
 
   return (
-    <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap' }}>
+    <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', width: '100%' }}>
       
       {/* Left Column: Register & Available Certificates */}
-      <div style={{ flex: '2 1 600px' }}>
+      <div style={{ flex: '2 1 540px', minWidth: 0, width: '100%' }}>
         <OfficialCard title="AVAILABLE CERTIFICATES">
-          <p style={{ color: 'var(--text-light)', marginBottom: '24px' }}>
-            Generate or view official certificates associated with this specimen. Generation draws directly from the official verified SQLite Registry records.
+          <p style={{ color: 'var(--text-light)', marginBottom: '20px', fontSize: '0.92rem' }}>
+            Generate or view official certificates associated with this specimen. All credentials draw directly from verified National Registry records.
           </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {requiredTypes.map(rt => {
               const doc = activeDocs.find(d => d.documentType === rt.type);
               return (
-                <div key={rt.type} style={{ border: '1px solid var(--border-color)', padding: '16px', borderRadius: '4px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#fff' }}>
-                  <div>
-                    <h3 style={{ margin: '0 0 4px 0', fontSize: '1.1rem', color: 'var(--text-dark)' }}>{rt.name}</h3>
-                    <div style={{ fontSize: '0.9rem', color: 'var(--text-light)' }}>
+                <div key={rt.type} style={{ border: '1px solid var(--border-color)', padding: '16px', borderRadius: 'var(--radius-md)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#fff', flexWrap: 'wrap', gap: '12px' }}>
+                  <div style={{ minWidth: 0, flex: '1 1 200px' }}>
+                    <h3 style={{ margin: '0 0 4px 0', fontSize: '1rem', color: 'var(--text-dark)', wordBreak: 'break-word' }}>{rt.name}</h3>
+                    <div style={{ fontSize: '0.82rem', color: 'var(--text-light)' }}>
                       Status: {doc ? <strong style={{ color: 'var(--status-green)' }}>ISSUED (v{doc.version})</strong> : <strong style={{ color: 'var(--status-warning)' }}>PENDING GENERATION</strong>}
                     </div>
                   </div>
-                  <div style={{ display: 'flex', gap: '8px' }}>
+                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                     {doc && (
-                      <Link href={`/registry/${id}/documents/${doc.id}`} style={{ padding: '8px 16px', backgroundColor: '#fff', border: '1px solid var(--gov-blue)', color: 'var(--gov-blue)', borderRadius: '4px', textDecoration: 'none', fontWeight: 'bold' }}>
+                      <Link href={`/registry/${id}/documents/${doc.id}`} style={{ padding: '8px 16px', backgroundColor: '#fff', border: '1px solid var(--gov-blue)', color: 'var(--gov-blue)', borderRadius: '4px', textDecoration: 'none', fontWeight: 'bold', fontSize: '0.85rem' }}>
                         VIEW
                       </Link>
                     )}
@@ -69,72 +69,74 @@ export default async function DocumentVaultPage({ params }: { params: Promise<{ 
             })}
           </div>
 
-          <div style={{ marginTop: '32px', borderTop: '2px solid var(--border-color)', paddingTop: '24px' }}>
-             <h3 style={{ margin: '0 0 16px 0', color: 'var(--gov-blue)' }}>GENERATE COMPLETE BANANA FILE</h3>
-             <p style={{ color: 'var(--text-light)', marginBottom: '16px' }}>Compile all valid certificates into a single consolidated file reference.</p>
+          <div style={{ marginTop: '28px', borderTop: '2px solid var(--border-color)', paddingTop: '20px' }}>
+             <h3 style={{ margin: '0 0 8px 0', color: 'var(--gov-blue)', fontSize: '1.1rem' }}>GENERATE COMPLETE BANANA DOSSIER</h3>
+             <p style={{ color: 'var(--text-light)', marginBottom: '16px', fontSize: '0.9rem' }}>Compile all valid certificates into a single consolidated file reference.</p>
              <DocumentGeneratorButton bananaId={id} documentType="COMPLETE_FILE" hasExisting={!!activeDocs.find(d => d.documentType === 'COMPLETE_FILE')} label="GENERATE BUNDLE 📦" />
           </div>
         </OfficialCard>
 
-        <div style={{ marginTop: '32px' }}>
+        <div style={{ marginTop: '24px' }}>
           <OfficialCard title="DOCUMENT REGISTER">
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem' }}>
-              <thead>
-                <tr style={{ borderBottom: '2px solid var(--border-color)', textAlign: 'left' }}>
-                  <th style={{ padding: '12px 8px' }}>Document No.</th>
-                  <th style={{ padding: '12px 8px' }}>Type</th>
-                  <th style={{ padding: '12px 8px' }}>Ver.</th>
-                  <th style={{ padding: '12px 8px' }}>Issue Date</th>
-                  <th style={{ padding: '12px 8px' }}>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {banana.documents.map(doc => (
-                  <tr key={doc.id} style={{ borderBottom: '1px solid #eee' }}>
-                    <td style={{ padding: '12px 8px', fontFamily: 'monospace', fontWeight: 'bold' }}>{doc.documentNumber}</td>
-                    <td style={{ padding: '12px 8px' }}>{doc.documentType}</td>
-                    <td style={{ padding: '12px 8px' }}>v{doc.version}</td>
-                    <td style={{ padding: '12px 8px' }}>{new Date(doc.issueDate).toLocaleDateString()}</td>
-                    <td style={{ padding: '12px 8px', color: doc.status === 'VALID' ? 'var(--status-green)' : 'var(--status-red)', fontWeight: 'bold' }}>{doc.status}</td>
+            <div className="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Document No.</th>
+                    <th>Type</th>
+                    <th>Ver.</th>
+                    <th>Issue Date</th>
+                    <th>Status</th>
                   </tr>
-                ))}
-                {banana.documents.length === 0 && (
-                  <tr><td colSpan={5} style={{ padding: '24px', textAlign: 'center', color: 'var(--text-light)' }}>No documents registered.</td></tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {banana.documents.map(doc => (
+                    <tr key={doc.id}>
+                      <td style={{ fontFamily: 'monospace', fontWeight: 'bold' }}>{doc.documentNumber}</td>
+                      <td>{doc.documentType}</td>
+                      <td>v{doc.version}</td>
+                      <td>{new Date(doc.issueDate).toLocaleDateString()}</td>
+                      <td style={{ color: doc.status === 'VALID' ? 'var(--status-green)' : 'var(--status-red)', fontWeight: 'bold' }}>{doc.status}</td>
+                    </tr>
+                  ))}
+                  {banana.documents.length === 0 && (
+                    <tr><td colSpan={5} style={{ padding: '24px', textAlign: 'center', color: 'var(--text-light)' }}>No documents registered yet.</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </OfficialCard>
         </div>
       </div>
 
       {/* Right Column: Summary & History */}
-      <div style={{ flex: '1 1 300px' }}>
+      <div style={{ flex: '1 1 280px', minWidth: 0, width: '100%' }}>
         <OfficialCard title="DOCUMENT SUMMARY">
           <div style={{ marginBottom: '16px' }}>
-            <div style={{ fontSize: '0.8rem', color: 'var(--text-light)', textTransform: 'uppercase' }}>File Reference No.</div>
-            <div style={{ fontFamily: 'monospace', fontSize: '1.1rem' }}>{banana.registrationNumber}</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>File Reference No.</div>
+            <div style={{ fontFamily: 'monospace', fontSize: '1.05rem', fontWeight: 600, wordBreak: 'break-all' }}>{banana.registrationNumber}</div>
           </div>
           <div style={{ marginBottom: '16px' }}>
-            <div style={{ fontSize: '0.8rem', color: 'var(--text-light)', textTransform: 'uppercase' }}>Total Active Docs</div>
-            <div style={{ fontWeight: 'bold', fontSize: '1.5rem', color: 'var(--gov-blue)' }}>{activeDocs.length}</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Total Active Docs</div>
+            <div style={{ fontWeight: 'bold', fontSize: '1.6rem', color: 'var(--gov-blue)' }}>{activeDocs.length}</div>
           </div>
-          <div style={{ marginBottom: '16px' }}>
-            <div style={{ fontSize: '0.8rem', color: 'var(--text-light)', textTransform: 'uppercase' }}>Revoked / Expired</div>
-            <div style={{ fontWeight: 'bold', color: 'var(--status-red)' }}>{banana.documents.length - activeDocs.length}</div>
+          <div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Revoked / Expired</div>
+            <div style={{ fontWeight: 'bold', color: 'var(--status-red)', fontSize: '1.1rem' }}>{banana.documents.length - activeDocs.length}</div>
           </div>
         </OfficialCard>
 
         <div style={{ marginTop: '24px' }}>
           <OfficialCard title="DOCUMENT HISTORY">
-             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                {banana.auditEvents.map(evt => (
                  <div key={evt.id} style={{ borderLeft: '3px solid var(--gov-blue)', paddingLeft: '12px' }}>
-                   <div style={{ fontSize: '0.8rem', color: 'var(--text-light)' }}>{new Date(evt.timestamp).toLocaleString()}</div>
-                   <div style={{ fontWeight: 'bold', fontSize: '0.9rem' }}>{evt.eventType.replace(/_/g, ' ')}</div>
-                   <div style={{ fontSize: '0.9rem', color: 'var(--text-dark)' }}>{evt.description}</div>
+                   <div style={{ fontSize: '0.75rem', color: 'var(--text-light)' }}>{new Date(evt.timestamp).toLocaleString()}</div>
+                   <div style={{ fontWeight: 'bold', fontSize: '0.85rem' }}>{evt.eventType.replace(/_/g, ' ')}</div>
+                   <div style={{ fontSize: '0.82rem', color: 'var(--text-dark)', wordBreak: 'break-word' }}>{evt.description}</div>
                  </div>
                ))}
-               {banana.auditEvents.length === 0 && <div style={{ color: 'var(--text-light)', fontSize: '0.9rem' }}>No vault history recorded.</div>}
+               {banana.auditEvents.length === 0 && <div style={{ color: 'var(--text-light)', fontSize: '0.88rem' }}>No vault history recorded.</div>}
              </div>
           </OfficialCard>
         </div>

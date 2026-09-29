@@ -28,10 +28,14 @@ export function DocumentGeneratorButton({ bananaId, documentType, hasExisting, l
         backgroundColor: 'var(--gov-blue)', 
         color: '#fff', 
         border: 'none', 
-        borderRadius: '4px', 
+        borderRadius: 'var(--radius-sm)', 
         fontWeight: 'bold', 
         cursor: loading ? 'not-allowed' : 'pointer',
-        opacity: loading ? 0.7 : 1
+        opacity: loading ? 0.7 : 1,
+        minHeight: '38px',
+        fontSize: '0.85rem',
+        whiteSpace: 'nowrap',
+        transition: 'background-color var(--transition-fast)'
       }}
     >
       {loading ? 'GENERATING...' : label ? label : hasExisting ? 'REGENERATE' : 'GENERATE'}

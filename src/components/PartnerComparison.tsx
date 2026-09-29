@@ -21,8 +21,6 @@ export function PartnerComparison({ partners, banana }: { partners: any[], banan
 
   const getAttr = (partner: any, key: string) => {
     if (!partner || !banana) return 0;
-    // Generate a deterministic pseudo-random score between 40 and 99
-    // based uniquely on the Banana ID, Partner ID, and the specific Factor Key
     const seed = hashStr(`${banana.id}-${partner.id}-${key}`);
     return 40 + (seed % 60);
   };
@@ -49,18 +47,18 @@ export function PartnerComparison({ partners, banana }: { partners: any[], banan
   }
 
   return (
-    <div>
-      <div style={{ display: 'flex', gap: '24px', marginBottom: '32px' }}>
-        <div style={{ flex: 1 }}>
-          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px' }}>Candidate 1</label>
-          <select value={p1Id} onChange={e => setP1Id(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '4px', border: '1px solid var(--border-color)' }}>
+    <div style={{ width: '100%', minWidth: 0 }}>
+      <div style={{ display: 'flex', gap: '16px', marginBottom: '24px', flexWrap: 'wrap' }}>
+        <div style={{ flex: '1 1 240px', minWidth: '200px' }}>
+          <label style={{ display: 'block', fontWeight: 600, marginBottom: '6px', fontSize: '0.9rem' }}>Candidate 1</label>
+          <select value={p1Id} onChange={e => setP1Id(e.target.value)} style={{ width: '100%', padding: '12px 14px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', minHeight: '44px', fontSize: '0.95rem' }}>
             <option value="">Select a partner...</option>
             {partners.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
           </select>
         </div>
-        <div style={{ flex: 1 }}>
-          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px' }}>Candidate 2</label>
-          <select value={p2Id} onChange={e => setP2Id(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '4px', border: '1px solid var(--border-color)' }}>
+        <div style={{ flex: '1 1 240px', minWidth: '200px' }}>
+          <label style={{ display: 'block', fontWeight: 600, marginBottom: '6px', fontSize: '0.9rem' }}>Candidate 2</label>
+          <select value={p2Id} onChange={e => setP2Id(e.target.value)} style={{ width: '100%', padding: '12px 14px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', minHeight: '44px', fontSize: '0.95rem' }}>
             <option value="">Select a partner...</option>
             {partners.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
           </select>
@@ -69,52 +67,54 @@ export function PartnerComparison({ partners, banana }: { partners: any[], banan
 
       {p1 && p2 && (
         <>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center' }}>
-            <thead>
-              <tr style={{ backgroundColor: '#f0f0f0', borderBottom: '2px solid var(--border-color)' }}>
-                <th style={{ padding: '12px', textAlign: 'left' }}>Factor</th>
-                <th style={{ padding: '12px', fontSize: '1.2rem', color: s1 >= s2 ? 'var(--status-green)' : 'inherit' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                    {p1.name} <PartnerIcon icon={p1.imageIcon} size="2rem" />
-                  </div>
-                </th>
-                <th style={{ padding: '12px', fontSize: '1.2rem', color: s2 >= s1 ? 'var(--status-green)' : 'inherit' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                    {p2.name} <PartnerIcon icon={p2.imageIcon} size="2rem" />
-                  </div>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                { label: 'Traditional Pairing', key: 'traditionalPairing' },
-                { label: 'Taste Chemistry', key: 'taste' },
-                { label: 'Texture Alignment', key: 'texture' },
-                { label: 'Pairing Frequency', key: 'frequency' },
-                { label: 'Partner Stability', key: 'stability' },
-                { label: 'History Score', key: 'history' },
-              ].map(row => {
-                const v1 = getAttr(p1, row.key);
-                const v2 = getAttr(p2, row.key);
-                return (
-                  <tr key={row.key} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <td style={{ padding: '12px', textAlign: 'left', fontWeight: 'bold', color: 'var(--text-light)' }}>{row.label}</td>
-                    <td style={{ padding: '12px', fontWeight: v1 >= v2 ? 'bold' : 'normal', color: v1 > v2 ? 'var(--gov-blue)' : 'inherit' }}>{v1}%</td>
-                    <td style={{ padding: '12px', fontWeight: v2 >= v1 ? 'bold' : 'normal', color: v2 > v1 ? 'var(--gov-blue)' : 'inherit' }}>{v2}%</td>
-                  </tr>
-                );
-              })}
-              <tr style={{ borderBottom: '2px solid var(--gov-blue)', backgroundColor: '#fafafa' }}>
-                <td style={{ padding: '16px', textAlign: 'left', fontWeight: 'bold', fontSize: '1.1rem' }}>OVERALL COMPATIBILITY</td>
-                <td style={{ padding: '16px', fontSize: '1.5rem', fontWeight: 'bold', color: s1 > s2 ? 'var(--status-green)' : 'inherit' }}>{s1}%</td>
-                <td style={{ padding: '16px', fontSize: '1.5rem', fontWeight: 'bold', color: s2 > s1 ? 'var(--status-green)' : 'inherit' }}>{s2}%</td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="table-responsive">
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center' }}>
+              <thead>
+                <tr style={{ backgroundColor: 'var(--gov-blue-light)', borderBottom: '2px solid var(--border-color)' }}>
+                  <th style={{ padding: '12px', textAlign: 'left', minWidth: '130px' }}>Factor</th>
+                  <th style={{ padding: '12px', fontSize: '1.1rem', color: s1 >= s2 ? 'var(--status-green)' : 'inherit', minWidth: '130px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                      <span style={{ wordBreak: 'break-word' }}>{p1.name}</span> <PartnerIcon icon={p1.imageIcon} size="1.8rem" />
+                    </div>
+                  </th>
+                  <th style={{ padding: '12px', fontSize: '1.1rem', color: s2 >= s1 ? 'var(--status-green)' : 'inherit', minWidth: '130px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                      <span style={{ wordBreak: 'break-word' }}>{p2.name}</span> <PartnerIcon icon={p2.imageIcon} size="1.8rem" />
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { label: 'Traditional Pairing', key: 'traditionalPairing' },
+                  { label: 'Taste Chemistry', key: 'taste' },
+                  { label: 'Texture Alignment', key: 'texture' },
+                  { label: 'Pairing Frequency', key: 'frequency' },
+                  { label: 'Partner Stability', key: 'stability' },
+                  { label: 'History Score', key: 'history' },
+                ].map(row => {
+                  const v1 = getAttr(p1, row.key);
+                  const v2 = getAttr(p2, row.key);
+                  return (
+                    <tr key={row.key} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                      <td style={{ padding: '10px 12px', textAlign: 'left', fontWeight: 'bold', color: 'var(--text-light)', fontSize: '0.9rem' }}>{row.label}</td>
+                      <td style={{ padding: '10px 12px', fontWeight: v1 >= v2 ? 'bold' : 'normal', color: v1 > v2 ? 'var(--gov-blue)' : 'inherit', fontSize: '1rem' }}>{v1}%</td>
+                      <td style={{ padding: '10px 12px', fontWeight: v2 >= v1 ? 'bold' : 'normal', color: v2 > v1 ? 'var(--gov-blue)' : 'inherit', fontSize: '1rem' }}>{v2}%</td>
+                    </tr>
+                  );
+                })}
+                <tr style={{ borderBottom: '2px solid var(--gov-blue)', backgroundColor: '#fafafa' }}>
+                  <td style={{ padding: '14px 12px', textAlign: 'left', fontWeight: 'bold', fontSize: '1rem' }}>OVERALL COMPATIBILITY</td>
+                  <td style={{ padding: '14px 12px', fontSize: '1.4rem', fontWeight: 'bold', color: s1 > s2 ? 'var(--status-green)' : 'inherit' }}>{s1}%</td>
+                  <td style={{ padding: '14px 12px', fontSize: '1.4rem', fontWeight: 'bold', color: s2 > s1 ? 'var(--status-green)' : 'inherit' }}>{s2}%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-          <div style={{ marginTop: '32px', textAlign: 'center', backgroundColor: 'var(--gov-blue-light)', border: '2px solid var(--gov-blue)', padding: '24px', borderRadius: '8px' }}>
-            <div style={{ fontSize: '0.9rem', color: 'var(--gov-blue)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>DEPARTMENT RECOMMENDATION</div>
-            <div style={{ fontSize: '2rem', fontWeight: 'bold', color: 'var(--gov-blue-dark)' }}>{recommendation}</div>
+          <div style={{ marginTop: '24px', textAlign: 'center', backgroundColor: 'var(--gov-blue-light)', border: '2px solid var(--gov-blue)', padding: '20px', borderRadius: 'var(--radius-md)' }}>
+            <div style={{ fontSize: '0.82rem', color: 'var(--gov-blue)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', fontWeight: 600 }}>DEPARTMENT RECOMMENDATION</div>
+            <div style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 'bold', color: 'var(--gov-blue-dark)', wordBreak: 'break-word' }}>{recommendation}</div>
           </div>
         </>
       )}

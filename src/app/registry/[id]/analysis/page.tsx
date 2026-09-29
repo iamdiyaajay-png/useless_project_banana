@@ -3,6 +3,7 @@ import React from 'react';
 import { prisma } from '@/lib/services';
 import { notFound } from 'next/navigation';
 import { AnalysisEngine } from '@/components/AnalysisEngine';
+import Link from 'next/link';
 
 export const revalidate = 0;
 
@@ -16,24 +17,24 @@ export default async function AnalysisPage({ params }: { params: Promise<{ id: s
   if (!banana) return notFound();
 
   return (
-    <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-      <div style={{ marginBottom: '32px' }}>
-        <h1 style={{ fontSize: '2rem', marginBottom: '8px' }}>BANANA ANALYSIS ENGINE</h1>
-        <p style={{ color: 'var(--text-light)', fontSize: '1.1rem' }}>
+    <div style={{ maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
+      <div style={{ marginBottom: '24px' }}>
+        <h1 style={{ fontSize: 'clamp(1.4rem, 3.5vw, 2rem)', marginBottom: '6px' }}>BANANA ANALYSIS ENGINE</h1>
+        <p style={{ color: 'var(--text-light)', fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', margin: 0 }}>
           Real-time physical and optical inspection for {banana.officialName}.
         </p>
       </div>
 
       {!banana.photo ? (
-        <div style={{ backgroundColor: 'var(--status-red-light)', border: '1px solid var(--status-red)', padding: '24px', borderRadius: '4px' }}>
-          <strong style={{ color: 'var(--status-red)', fontSize: '1.2rem' }}>ANALYSIS UNAVAILABLE</strong>
-          <p style={{ marginTop: '8px', marginBottom: '24px' }}>No specimen image is currently associated with this banana for standard analysis.</p>
-          <a 
+        <div style={{ backgroundColor: 'var(--status-red-light)', border: '1px solid var(--status-red)', padding: '24px', borderRadius: 'var(--radius-md)' }}>
+          <strong style={{ color: 'var(--status-red)', fontSize: '1.15rem' }}>ANALYSIS UNAVAILABLE</strong>
+          <p style={{ marginTop: '8px', marginBottom: '20px', color: 'var(--text-dark)' }}>No specimen image is currently associated with this banana for standard analysis.</p>
+          <Link 
             href={`/registry/${banana.id}/analysis/curvature`}
-            style={{ display: 'inline-block', padding: '12px 24px', backgroundColor: 'var(--gov-blue)', color: '#fff', textDecoration: 'none', borderRadius: '4px', fontWeight: 'bold' }}
+            style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '12px 24px', backgroundColor: 'var(--gov-blue)', color: '#fff', textDecoration: 'none', borderRadius: 'var(--radius-md)', fontWeight: 'bold', minHeight: '44px' }}
           >
             🍌 LAUNCH CURVATURE CHECKER INSTEAD
-          </a>
+          </Link>
         </div>
       ) : (
         <AnalysisEngine bananaId={banana.id} photoUrl={banana.photo} />

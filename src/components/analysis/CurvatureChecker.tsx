@@ -441,68 +441,73 @@ export function CurvatureChecker({ bananaId }: { bananaId: string }) {
         onReady={() => { setTimeout(() => setCvLoaded(true), 1000); }} 
       />
 
-      <div style={{ textAlign: 'center', marginBottom: '40px', borderBottom: '3px solid var(--gov-blue)', paddingBottom: '24px' }}>
-        <h1 style={{ margin: '0 0 8px 0', color: 'var(--gov-blue)', fontSize: '2.5rem', letterSpacing: '4px' }}>BANANA CURVATURE ANALYSIS DIVISION</h1>
-        <div style={{ fontSize: '1.2rem', fontFamily: 'monospace', fontWeight: 'bold' }}>SPECIMEN GEOMETRY & CURVATURE ASSESSMENT PORTAL</div>
+      <div style={{ textAlign: 'center', marginBottom: '28px', borderBottom: '3px solid var(--gov-blue)', paddingBottom: '20px' }}>
+        <h1 style={{ margin: '0 0 6px 0', color: 'var(--gov-blue)', fontSize: 'clamp(1.3rem, 3.5vw, 2.2rem)', letterSpacing: '1.5px' }}>
+          BANANA CURVATURE ANALYSIS DIVISION
+        </h1>
+        <div style={{ fontSize: 'clamp(0.85rem, 2vw, 1.1rem)', fontFamily: 'monospace', fontWeight: 'bold' }}>
+          SPECIMEN GEOMETRY & CURVATURE ASSESSMENT PORTAL
+        </div>
       </div>
 
-      <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', width: '100%' }}>
         {/* Left Column */}
-        <div style={{ flex: '2 1 600px', display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        <div style={{ flex: '2 1 540px', minWidth: 0, width: '100%', display: 'flex', flexDirection: 'column', gap: '24px' }}>
           
           <OfficialCard title="SECTION 01: SPECIMEN INPUT">
             {!capturedImage && !inputMode && (
-              <div style={{ display: 'flex', gap: '16px' }}>
-                <button onClick={startCamera} style={{ flex: 1, padding: '24px', backgroundColor: 'var(--gov-blue)', color: '#fff', border: 'none', borderRadius: '4px', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>
+              <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
+                <button onClick={startCamera} style={{ flex: '1 1 200px', minHeight: '52px', padding: '16px', backgroundColor: 'var(--gov-blue)', color: '#fff', border: 'none', borderRadius: 'var(--radius-md)', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer' }}>
                   📷 LIVE CAMERA
                 </button>
-                <button onClick={() => setInputMode('UPLOAD')} style={{ flex: 1, padding: '24px', backgroundColor: 'var(--ivory)', color: 'var(--gov-blue)', border: '2px solid var(--gov-blue)', borderRadius: '4px', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>
+                <button onClick={() => setInputMode('UPLOAD')} style={{ flex: '1 1 200px', minHeight: '52px', padding: '16px', backgroundColor: 'var(--ivory)', color: 'var(--gov-blue)', border: '2px solid var(--gov-blue)', borderRadius: 'var(--radius-md)', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer' }}>
                   📁 UPLOAD SPECIMEN IMAGE
                 </button>
               </div>
             )}
 
             {cameraError && (
-              <div style={{ padding: '16px', backgroundColor: 'var(--status-warning-light)', color: 'var(--status-warning)', border: '1px solid var(--status-warning)', marginTop: '16px' }}>
+              <div style={{ padding: '14px', backgroundColor: 'var(--status-warning-light)', color: 'var(--status-warning)', border: '1px solid var(--status-warning)', marginTop: '14px', borderRadius: 'var(--radius-md)', fontSize: '0.88rem' }}>
                 {cameraError}
               </div>
             )}
 
             {inputMode === 'CAMERA' && !capturedImage && (
-              <div style={{ position: 'relative', width: '100%', backgroundColor: '#000', borderRadius: '4px', overflow: 'hidden' }}>
-                <video ref={videoRef} autoPlay playsInline style={{ width: '100%', display: 'block' }} />
-                <canvas ref={canvasOverlayRef} width={800} height={600} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }} />
-                <div style={{ position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '16px' }}>
-                  <button onClick={captureImage} style={{ padding: '12px 32px', backgroundColor: '#fff', color: 'var(--gov-blue)', border: 'none', borderRadius: '24px', fontWeight: 'bold', fontSize: '1.1rem', cursor: 'pointer', boxShadow: '0 4px 6px rgba(0,0,0,0.3)' }}>
-                    CAPTURE SPECIMEN
-                  </button>
-                  <button onClick={() => { stopCamera(); setInputMode(null); }} style={{ padding: '12px 24px', backgroundColor: 'rgba(0,0,0,0.5)', color: '#fff', border: '1px solid #fff', borderRadius: '24px', cursor: 'pointer' }}>
-                    CANCEL
-                  </button>
-                </div>
-                {/* 7. Instruction panel at top right */}
-                <div style={{ position: 'absolute', top: '20px', right: '20px', width: '280px', backgroundColor: 'rgba(0,0,0,0.75)', color: '#fff', padding: '16px', borderRadius: '6px', fontSize: '0.85rem', fontFamily: 'monospace', border: '1px solid rgba(0, 255, 255, 0.4)', backdropFilter: 'blur(4px)' }}>
-                  <div style={{ color: '#00ffff', marginBottom: '12px', fontWeight: 'bold', fontSize: '1rem', display: 'flex', justifyContent: 'space-between' }}>
-                    <span>ALIGN SPECIMEN</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div style={{ position: 'relative', width: '100%', backgroundColor: '#000', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
+                  <video ref={videoRef} autoPlay playsInline style={{ width: '100%', display: 'block', maxHeight: '480px', objectFit: 'cover' }} />
+                  <canvas ref={canvasOverlayRef} width={800} height={600} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }} />
+                  <div style={{ position: 'absolute', bottom: '16px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '12px', zIndex: 10, width: '90%', justifyContent: 'center' }}>
+                    <button onClick={captureImage} style={{ padding: '12px 24px', backgroundColor: '#fff', color: 'var(--gov-blue)', border: 'none', borderRadius: '24px', fontWeight: 'bold', fontSize: '1rem', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.3)', minHeight: '44px' }}>
+                      CAPTURE SPECIMEN
+                    </button>
+                    <button onClick={() => { stopCamera(); setInputMode(null); }} style={{ padding: '12px 18px', backgroundColor: 'rgba(0,0,0,0.65)', color: '#fff', border: '1px solid #fff', borderRadius: '24px', cursor: 'pointer', minHeight: '44px', fontSize: '0.9rem' }}>
+                      CANCEL
+                    </button>
                   </div>
-                  <ul style={{ margin: 0, paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '8px', color: 'rgba(255, 255, 255, 0.9)' }}>
-                    <li>Place banana inside the guide</li>
-                    <li>Keep both ends visible</li>
-                    <li>Keep camera parallel to specimen</li>
-                    <li>Avoid shadows & excessive rotation</li>
+                </div>
+                {/* Responsive guide card */}
+                <div style={{ backgroundColor: 'var(--gov-blue-dark)', color: '#fff', padding: '14px', borderRadius: 'var(--radius-md)', fontSize: '0.82rem', fontFamily: 'monospace', border: '1px solid rgba(0, 255, 255, 0.4)' }}>
+                  <div style={{ color: '#00ffff', marginBottom: '6px', fontWeight: 'bold', fontSize: '0.9rem' }}>
+                    📐 ALIGN SPECIMEN GUIDE
+                  </div>
+                  <ul style={{ margin: 0, paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '4px', color: 'rgba(255, 255, 255, 0.9)' }}>
+                    <li>Place banana inside the guide ellipse</li>
+                    <li>Keep both ends visible & parallel to camera</li>
+                    <li>Ensure uniform lighting & high contrast</li>
                   </ul>
                 </div>
               </div>
             )}
 
             {inputMode === 'UPLOAD' && !capturedImage && (
-              <div style={{ border: '2px dashed var(--gov-blue)', padding: '40px', textAlign: 'center', borderRadius: '4px', backgroundColor: '#fafafa' }}>
+              <div style={{ border: '2px dashed var(--gov-blue)', padding: '30px 16px', textAlign: 'center', borderRadius: 'var(--radius-md)', backgroundColor: '#fafafa' }}>
                 <input type="file" accept="image/jpeg, image/png, image/jpg" onChange={handleFileUpload} style={{ display: 'none' }} id="file-upload" />
-                <label htmlFor="file-upload" style={{ padding: '16px 32px', backgroundColor: 'var(--gov-blue)', color: '#fff', cursor: 'pointer', borderRadius: '4px', fontWeight: 'bold', display: 'inline-block', marginBottom: '16px' }}>
+                <label htmlFor="file-upload" style={{ padding: '14px 28px', backgroundColor: 'var(--gov-blue)', color: '#fff', cursor: 'pointer', borderRadius: 'var(--radius-md)', fontWeight: 'bold', display: 'inline-block', marginBottom: '12px', minHeight: '44px' }}>
                   SELECT FILE
                 </label>
-                <div style={{ color: 'var(--text-light)', fontSize: '0.9rem' }}>Supports JPG, PNG. Clear contrast background recommended.</div>
-                <button onClick={() => setInputMode(null)} style={{ marginTop: '24px', display: 'block', margin: '24px auto 0', padding: '8px 16px', background: 'transparent', border: 'none', color: 'var(--text-light)', cursor: 'pointer', textDecoration: 'underline' }}>
+                <div style={{ color: 'var(--text-light)', fontSize: '0.85rem' }}>Supports JPG, PNG. Clear contrast background recommended.</div>
+                <button onClick={() => setInputMode(null)} style={{ marginTop: '16px', display: 'block', margin: '16px auto 0', padding: '8px 16px', background: 'transparent', border: 'none', color: 'var(--text-light)', cursor: 'pointer', textDecoration: 'underline' }}>
                   Cancel
                 </button>
               </div>
@@ -518,7 +523,7 @@ export function CurvatureChecker({ bananaId }: { bananaId: string }) {
                  </div>
                  
                  <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-                   <div style={{ flex: '1', minWidth: '300px' }}>
+                   <div style={{ flex: '1', minWidth: 'min(100%, 260px)' }}>
                      <div style={{ fontSize: '0.8rem', color: 'var(--text-light)', marginBottom: '8px' }}>INPUT BUFFER</div>
                      <img ref={imageDisplayRef} src={capturedImage} style={{ width: '100%', border: '1px solid var(--border-color)', borderRadius: '4px', display: results ? 'none' : 'block' }} />
                      
@@ -610,64 +615,66 @@ export function CurvatureChecker({ bananaId }: { bananaId: string }) {
 
           {results && (
             <OfficialCard title="SECTION 03: CURVATURE RESULTS">
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.95rem' }}>
-                <tbody>
-                  <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <th style={{ padding: '12px 0', width: '60%' }}>Measurement Mode</th>
-                    <td style={{ padding: '12px 0', fontWeight: 'bold', color: results.isCalibrated ? 'var(--status-green)' : 'var(--status-warning)' }}>
-                      {results.isCalibrated ? 'ABSOLUTE (cm)' : 'RELATIVE (est)'}
-                    </td>
-                  </tr>
-                  <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <th style={{ padding: '12px 0' }}>Arc / Centerline Length</th>
-                    <td style={{ padding: '12px 0', fontFamily: 'monospace' }}>{results.arcLength.toFixed(1)}</td>
-                  </tr>
-                  <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <th style={{ padding: '12px 0' }}>Straight Chord Length</th>
-                    <td style={{ padding: '12px 0', fontFamily: 'monospace' }}>{results.chordLength.toFixed(1)}</td>
-                  </tr>
-                  <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <th style={{ padding: '12px 0' }}>Maximum Deviation</th>
-                    <td style={{ padding: '12px 0', fontFamily: 'monospace' }}>{results.maxDeviation.toFixed(1)}</td>
-                  </tr>
-                  <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <th style={{ padding: '12px 0' }}>Estimated Bend Angle</th>
-                    <td style={{ padding: '12px 0', fontFamily: 'monospace' }}>{results.bendAngle.toFixed(1)}°</td>
-                  </tr>
-                  <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <th style={{ padding: '12px 0' }}>Symmetry Score</th>
-                    <td style={{ padding: '12px 0', fontFamily: 'monospace' }}>{results.symmetryScore.toFixed(1)} / 100</td>
-                  </tr>
-                  <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <th style={{ padding: '12px 0', fontSize: '1.1rem', color: 'var(--gov-blue)' }}>Curvature Index</th>
-                    <td style={{ padding: '12px 0', fontSize: '1.1rem', fontWeight: 'bold', color: 'var(--gov-blue)' }}>{results.curvatureIndex.toFixed(1)}%</td>
-                  </tr>
-                  <tr>
-                    <th style={{ padding: '12px 0', paddingTop: '24px' }}>Classification</th>
-                    <td style={{ padding: '12px 0', paddingTop: '24px', fontWeight: 'bold', color: '#cc0000' }}>{results.classification}</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div className="table-responsive">
+                <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.92rem' }}>
+                  <tbody>
+                    <tr>
+                      <th style={{ padding: '10px 12px', width: '55%' }}>Measurement Mode</th>
+                      <td style={{ padding: '10px 12px', fontWeight: 'bold', color: results.isCalibrated ? 'var(--status-green)' : 'var(--status-warning)' }}>
+                        {results.isCalibrated ? 'ABSOLUTE (cm)' : 'RELATIVE (est)'}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th style={{ padding: '10px 12px' }}>Arc / Centerline Length</th>
+                      <td style={{ padding: '10px 12px', fontFamily: 'monospace' }}>{results.arcLength.toFixed(1)}</td>
+                    </tr>
+                    <tr>
+                      <th style={{ padding: '10px 12px' }}>Straight Chord Length</th>
+                      <td style={{ padding: '10px 12px', fontFamily: 'monospace' }}>{results.chordLength.toFixed(1)}</td>
+                    </tr>
+                    <tr>
+                      <th style={{ padding: '10px 12px' }}>Maximum Deviation</th>
+                      <td style={{ padding: '10px 12px', fontFamily: 'monospace' }}>{results.maxDeviation.toFixed(1)}</td>
+                    </tr>
+                    <tr>
+                      <th style={{ padding: '10px 12px' }}>Estimated Bend Angle</th>
+                      <td style={{ padding: '10px 12px', fontFamily: 'monospace' }}>{results.bendAngle.toFixed(1)}°</td>
+                    </tr>
+                    <tr>
+                      <th style={{ padding: '10px 12px' }}>Symmetry Score</th>
+                      <td style={{ padding: '10px 12px', fontFamily: 'monospace' }}>{results.symmetryScore.toFixed(1)} / 100</td>
+                    </tr>
+                    <tr>
+                      <th style={{ padding: '10px 12px', fontSize: '1.05rem', color: 'var(--gov-blue)' }}>Curvature Index</th>
+                      <td style={{ padding: '10px 12px', fontSize: '1.05rem', fontWeight: 'bold', color: 'var(--gov-blue)' }}>{results.curvatureIndex.toFixed(1)}%</td>
+                    </tr>
+                    <tr>
+                      <th style={{ padding: '10px 12px' }}>Classification</th>
+                      <td style={{ padding: '10px 12px', fontWeight: 'bold', color: '#cc0000' }}>{results.classification}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-              <div style={{ marginTop: '24px', padding: '16px', backgroundColor: 'var(--gov-blue)', color: '#fff', borderRadius: '4px', textAlign: 'center' }}>
-                <div style={{ fontSize: '0.8rem', opacity: 0.8, textTransform: 'uppercase', marginBottom: '4px' }}>OFFICIAL CURVATURE STATUS</div>
-                <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+              <div style={{ marginTop: '20px', padding: '16px', backgroundColor: 'var(--gov-blue)', color: '#fff', borderRadius: 'var(--radius-md)', textAlign: 'center' }}>
+                <div style={{ fontSize: '0.75rem', opacity: 0.85, textTransform: 'uppercase', marginBottom: '4px', letterSpacing: '1px' }}>OFFICIAL CURVATURE STATUS</div>
+                <div style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.25rem)', fontWeight: 'bold' }}>
                   {results.classification === 'NEARLY STRAIGHT' ? 'STRAIGHT-SPECIMEN COMPLIANCE' : 
                    results.classification === 'EXTREMELY CURVED' ? 'CURVATURE REQUIRES REVIEW' : 'ACCEPTABLE'}
                 </div>
-                <div style={{ marginTop: '8px', fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--muted-gold)' }}>
+                <div style={{ marginTop: '6px', fontSize: '1.4rem', fontWeight: 'bold', color: 'var(--muted-gold)' }}>
                   GRADE: {results.curvatureIndex < 10 ? 'C' : results.curvatureIndex < 25 ? 'B' : results.curvatureIndex < 40 ? 'A' : 'A+'}
                 </div>
               </div>
               
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-light)', marginTop: '16px', fontStyle: 'italic', textAlign: 'center' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-light)', marginTop: '12px', fontStyle: 'italic', textAlign: 'center' }}>
                 * NOTE: These categories are part of an experimental classification system.
               </div>
             </OfficialCard>
           )}
 
           <div style={{ marginTop: 'auto' }}>
-             <button onClick={() => router.push(`/registry/${bananaId}/analysis`)} style={{ display: 'block', width: '100%', padding: '16px', backgroundColor: 'transparent', color: 'var(--gov-blue)', border: '2px solid var(--gov-blue)', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}>
+             <button onClick={() => router.push(`/registry/${bananaId}/analysis`)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', padding: '14px', backgroundColor: 'transparent', color: 'var(--gov-blue)', border: '2px solid var(--gov-blue)', borderRadius: 'var(--radius-md)', fontWeight: 'bold', cursor: 'pointer', minHeight: '44px', fontSize: '0.9rem' }}>
                RETURN TO GENERAL ANALYSIS
              </button>
           </div>

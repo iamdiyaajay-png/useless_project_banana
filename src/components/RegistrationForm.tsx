@@ -41,13 +41,29 @@ export function RegistrationForm() {
     }
   };
 
-  const labelStyle = { display: 'block', fontWeight: 'bold', marginBottom: '8px', color: 'var(--text-dark)' };
-  const inputStyle = { width: '100%', padding: '12px', border: '1px solid var(--border-color)', borderRadius: '4px', marginBottom: '20px', fontSize: '1rem' };
+  const labelStyle = { 
+    display: 'block', 
+    fontWeight: 600, 
+    marginBottom: '8px', 
+    color: 'var(--text-dark)',
+    fontSize: '0.9rem' 
+  };
+  
+  const inputStyle = { 
+    width: '100%', 
+    padding: '12px 14px', 
+    border: '1px solid var(--border-color)', 
+    borderRadius: 'var(--radius-md)', 
+    marginBottom: '20px', 
+    fontSize: '1rem',
+    minHeight: '44px',
+    backgroundColor: '#fff'
+  };
 
   return (
-    <OfficialCard title="Subject Details">
+    <OfficialCard title="Subject Registration Details">
       {error && (
-        <div style={{ backgroundColor: 'var(--status-red-light)', color: 'var(--status-red)', padding: '16px', borderRadius: '4px', marginBottom: '24px', border: '1px solid var(--status-red)' }}>
+        <div style={{ backgroundColor: 'var(--status-red-light)', color: 'var(--status-red)', padding: '16px', borderRadius: 'var(--radius-md)', marginBottom: '24px', border: '1px solid var(--status-red)' }}>
           <strong>Error:</strong> {error}
         </div>
       )}
@@ -70,17 +86,26 @@ export function RegistrationForm() {
 
         <div>
           <label style={labelStyle}>Banana Photo <span style={{ color: 'var(--status-red)' }}>*</span></label>
-          <input style={{...inputStyle, border: 'none', padding: 0}} type="file" name="photo" accept="image/*" required onChange={handleImageChange} />
-          
-          {preview && (
-            <div style={{ marginTop: '12px', marginBottom: '20px', border: '1px dashed var(--muted-gold)', padding: '12px', display: 'inline-block' }}>
-              <img src={preview} alt="Preview" style={{ maxWidth: '200px', maxHeight: '200px', objectFit: 'cover' }} />
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-light)', marginTop: '8px' }}>Image loaded successfully.</div>
-            </div>
-          )}
+          <div style={{ border: '2px dashed var(--border-color-dark)', padding: '20px', borderRadius: 'var(--radius-md)', backgroundColor: '#fafafa', marginBottom: '20px' }}>
+            <input 
+              type="file" 
+              name="photo" 
+              accept="image/*" 
+              required 
+              onChange={handleImageChange}
+              style={{ fontSize: '0.95rem', width: '100%', cursor: 'pointer' }}
+            />
+            
+            {preview && (
+              <div style={{ marginTop: '16px', border: '1px solid var(--muted-gold)', padding: '8px', display: 'inline-block', backgroundColor: '#fff', borderRadius: '4px' }}>
+                <img src={preview} alt="Preview" style={{ maxWidth: '180px', maxHeight: '180px', objectFit: 'cover', display: 'block' }} />
+                <div style={{ fontSize: '0.75rem', color: 'var(--status-green)', marginTop: '6px', fontWeight: 600 }}>✓ Image loaded successfully</div>
+              </div>
+            )}
+          </div>
         </div>
 
-        <div style={{ marginTop: '32px', borderTop: '1px solid var(--border-color)', paddingTop: '24px' }}>
+        <div style={{ marginTop: '24px', borderTop: '1px solid var(--border-color)', paddingTop: '20px' }}>
           <button 
             type="submit" 
             disabled={loading}
@@ -88,12 +113,16 @@ export function RegistrationForm() {
               backgroundColor: 'var(--gov-blue)',
               color: '#fff',
               border: 'none',
-              padding: '12px 32px',
+              padding: '14px 28px',
               fontSize: '1rem',
               fontWeight: 'bold',
-              borderRadius: '4px',
+              borderRadius: 'var(--radius-md)',
               cursor: loading ? 'not-allowed' : 'pointer',
-              opacity: loading ? 0.7 : 1
+              opacity: loading ? 0.7 : 1,
+              width: '100%',
+              maxWidth: '340px',
+              minHeight: '48px',
+              transition: 'background-color var(--transition-fast)'
             }}
           >
             {loading ? 'PROCESSING REGISTRATION...' : 'SUBMIT FOR REGISTRATION'}

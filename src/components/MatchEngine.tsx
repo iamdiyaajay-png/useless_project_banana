@@ -178,7 +178,7 @@ export function MatchEngine({ photoUrl, targetBananaId }: { photoUrl: string, ta
       />
 
       {/* Left Column: Specimen Processing */}
-      <div style={{ flex: '1 1 400px' }}>
+      <div style={{ flex: '1 1 320px', minWidth: 0, width: '100%' }}>
         <OfficialCard title="Section 01: Submitted Specimen">
           <div style={{ marginBottom: '16px' }}>
             <strong>Analysis Status:</strong> <StatusBadge status={status} />
@@ -188,8 +188,8 @@ export function MatchEngine({ photoUrl, targetBananaId }: { photoUrl: string, ta
           <div style={{ display: 'none' }}>
              <img ref={imgRef} src={photoUrl} alt="hidden-source" crossOrigin="anonymous" />
           </div>
-          <div style={{ border: '2px solid var(--border-color)' }}>
-            <canvas ref={canvasRef} style={{ width: '100%', display: 'block', backgroundColor: '#f0f0f0', minHeight: '200px' }} />
+          <div style={{ border: '2px solid var(--border-color)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
+            <canvas ref={canvasRef} style={{ width: '100%', display: 'block', backgroundColor: '#f0f0f0', minHeight: '180px' }} />
           </div>
           <div style={{ fontSize: '0.8rem', color: 'var(--text-light)', marginTop: '8px', textAlign: 'center' }}>
             Digital Match Trace: Feature Extraction
@@ -198,58 +198,60 @@ export function MatchEngine({ photoUrl, targetBananaId }: { photoUrl: string, ta
       </div>
 
       {/* Right Column: Match Results */}
-      <div style={{ flex: '2 1 500px' }}>
+      <div style={{ flex: '2 1 480px', minWidth: 0, width: '100%' }}>
         <OfficialCard title="Section 04: Match Results">
           {status !== 'COMPLETED' && status !== 'FAILED' ? (
-            <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-light)' }}>
+            <div style={{ textAlign: 'center', padding: '40px 20px', color: 'var(--text-light)' }}>
               Awaiting feature normalization and database comparison...
             </div>
           ) : matchResult ? (
             <div>
-              <div style={{ display: 'flex', gap: '24px', alignItems: 'center', marginBottom: '24px' }}>
-                <div style={{ width: '120px', height: '120px', border: '1px solid var(--border-color)', borderRadius: '4px', overflow: 'hidden' }}>
-                  <img src={matchResult.photo} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap' }}>
+                <div style={{ width: '100px', height: '100px', minWidth: '90px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
+                  <img src={matchResult.photo} alt={matchResult.officialName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
-                <div>
-                  <h3 style={{ margin: 0, color: 'var(--gov-blue)', fontSize: '1.5rem' }}>{matchResult.officialName}</h3>
-                  <div style={{ fontFamily: 'monospace', color: 'var(--text-dark)', marginTop: '4px' }}>{matchResult.registrationNumber}</div>
+                <div style={{ minWidth: 0, flex: 1 }}>
+                  <h3 style={{ margin: 0, color: 'var(--gov-blue)', fontSize: 'clamp(1.2rem, 3vw, 1.5rem)', wordBreak: 'break-word' }}>{matchResult.officialName}</h3>
+                  <div style={{ fontFamily: 'monospace', color: 'var(--text-dark)', marginTop: '4px', fontSize: '0.9rem', wordBreak: 'break-all' }}>{matchResult.registrationNumber}</div>
                 </div>
-                <div style={{ marginLeft: 'auto', textAlign: 'right' }}>
-                  <div style={{ fontSize: '2rem', fontWeight: 'bold', color: matchResult.similarityScore > 85 ? 'var(--status-green)' : 'var(--status-warning)' }}>
+                <div style={{ textAlign: 'right', minWidth: '100px' }}>
+                  <div style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 'bold', color: matchResult.similarityScore > 85 ? 'var(--status-green)' : 'var(--status-warning)' }}>
                     {matchResult.similarityScore.toFixed(1)}%
                   </div>
-                  <div style={{ fontSize: '0.9rem', color: 'var(--text-light)', textTransform: 'uppercase' }}>SIMILARITY</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-light)', textTransform: 'uppercase' }}>SIMILARITY</div>
                 </div>
               </div>
 
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', marginBottom: '16px' }}>
-                <thead>
-                  <tr style={{ backgroundColor: '#f9f9f9', borderBottom: '1px solid var(--border-color)' }}>
-                    <th style={{ padding: '8px' }}>Feature</th>
-                    <th style={{ padding: '8px' }}>Submitted</th>
-                    <th style={{ padding: '8px' }}>Registry Record</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <td style={{ padding: '8px' }}>Curvature</td>
-                    <td style={{ padding: '8px' }}>{matchResult.comparedFeatures.submitted.curvature}°</td>
-                    <td style={{ padding: '8px' }}>{matchResult.comparedFeatures.candidate.curvature}°</td>
-                  </tr>
-                  <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <td style={{ padding: '8px' }}>Straightness</td>
-                    <td style={{ padding: '8px' }}>{matchResult.comparedFeatures.submitted.straightness}</td>
-                    <td style={{ padding: '8px' }}>{matchResult.comparedFeatures.candidate.straightness}</td>
-                  </tr>
-                  <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <td style={{ padding: '8px' }}>Ripeness</td>
-                    <td style={{ padding: '8px' }}>{matchResult.comparedFeatures.submitted.ripeness}%</td>
-                    <td style={{ padding: '8px' }}>{matchResult.comparedFeatures.candidate.ripeness}%</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div className="table-responsive">
+                <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', marginBottom: '16px' }}>
+                  <thead>
+                    <tr style={{ backgroundColor: '#f9f9f9', borderBottom: '1px solid var(--border-color)' }}>
+                      <th style={{ padding: '10px' }}>Feature</th>
+                      <th style={{ padding: '10px' }}>Submitted</th>
+                      <th style={{ padding: '10px' }}>Registry Record</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                      <td style={{ padding: '10px' }}>Curvature</td>
+                      <td style={{ padding: '10px' }}>{matchResult.comparedFeatures.submitted.curvature}°</td>
+                      <td style={{ padding: '10px' }}>{matchResult.comparedFeatures.candidate.curvature}°</td>
+                    </tr>
+                    <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                      <td style={{ padding: '10px' }}>Straightness</td>
+                      <td style={{ padding: '10px' }}>{matchResult.comparedFeatures.submitted.straightness}</td>
+                      <td style={{ padding: '10px' }}>{matchResult.comparedFeatures.candidate.straightness}</td>
+                    </tr>
+                    <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                      <td style={{ padding: '10px' }}>Ripeness</td>
+                      <td style={{ padding: '10px' }}>{matchResult.comparedFeatures.submitted.ripeness}%</td>
+                      <td style={{ padding: '10px' }}>{matchResult.comparedFeatures.candidate.ripeness}%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-              <div style={{ backgroundColor: 'var(--status-green-light)', border: `1px solid var(--status-green)`, padding: '16px', borderRadius: '4px', textAlign: 'center' }}>
+              <div style={{ backgroundColor: 'var(--status-green-light)', border: `1px solid var(--status-green)`, padding: '14px', borderRadius: 'var(--radius-md)', textAlign: 'center', fontSize: '0.92rem' }}>
                 <strong style={{ color: 'var(--status-green)' }}>IDENTITY ASSESSMENT: {matchResult.classification}</strong>
               </div>
             </div>

@@ -247,7 +247,7 @@ export function AnalysisEngine({ bananaId, photoUrl }: { bananaId: string, photo
   };
 
   return (
-    <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap' }}>
+    <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', width: '100%' }}>
       <Script 
         src="https://docs.opencv.org/4.8.0/opencv.js" 
         strategy="lazyOnload" 
@@ -258,36 +258,36 @@ export function AnalysisEngine({ bananaId, photoUrl }: { bananaId: string, photo
       />
 
       {/* Main Analysis View */}
-      <div style={{ flex: '2 1 600px' }}>
+      <div style={{ flex: '2 1 540px', minWidth: 0, width: '100%', display: 'flex', flexDirection: 'column', gap: '24px' }}>
         <OfficialCard title="Section 01: Specimen Visual Examination">
           <div style={{ marginBottom: '16px' }}>
             <strong>Analysis Status:</strong> <StatusBadge status={status} />
           </div>
           
           {error && (
-            <div style={{ backgroundColor: 'var(--status-red-light)', color: 'var(--status-red)', padding: '16px', borderRadius: '4px', marginBottom: '24px', border: '1px solid var(--status-red)' }}>
+            <div style={{ backgroundColor: 'var(--status-red-light)', color: 'var(--status-red)', padding: '16px', borderRadius: 'var(--radius-md)', marginBottom: '20px', border: '1px solid var(--status-red)', fontSize: '0.9rem' }}>
               <strong>ANALYSIS COULD NOT BE COMPLETED</strong><br />
               Reason: {error}
             </div>
           )}
 
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-            <div style={{ border: '2px solid var(--border-color)', padding: '8px' }}>
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-light)', marginBottom: '4px' }}>ORIGINAL SPECIMEN</div>
+            <div style={{ border: '2px solid var(--border-color)', padding: '8px', borderRadius: 'var(--radius-md)', flex: '1 1 240px', minWidth: '200px' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-light)', marginBottom: '6px', fontWeight: 600 }}>ORIGINAL SPECIMEN</div>
               <img 
                 ref={imgRef} 
                 src={photoUrl} 
                 alt="Original" 
                 crossOrigin="anonymous" 
-                style={{ maxWidth: '300px', display: 'block' }} 
+                style={{ width: '100%', maxWidth: '320px', display: 'block', borderRadius: '4px', margin: '0 auto' }} 
               />
             </div>
             
-            <div style={{ border: '2px solid var(--gov-blue)', padding: '8px' }}>
-              <div style={{ fontSize: '0.8rem', color: 'var(--gov-blue)', fontWeight: 'bold', marginBottom: '4px' }}>PROCESSING CANVAS</div>
+            <div style={{ border: '2px solid var(--gov-blue)', padding: '8px', borderRadius: 'var(--radius-md)', flex: '1 1 240px', minWidth: '200px' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--gov-blue)', fontWeight: 'bold', marginBottom: '6px' }}>PROCESSING CANVAS</div>
               <canvas 
                 ref={canvasRef} 
-                style={{ maxWidth: '300px', display: 'block', backgroundColor: '#f0f0f0', minHeight: '200px' }} 
+                style={{ width: '100%', maxWidth: '320px', display: 'block', backgroundColor: '#f0f0f0', minHeight: '180px', borderRadius: '4px', margin: '0 auto' }} 
               />
             </div>
           </div>
@@ -296,41 +296,45 @@ export function AnalysisEngine({ bananaId, photoUrl }: { bananaId: string, photo
         {results && (
           <>
             <OfficialCard title="Section 05: Curvature Assessment">
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-                <tbody>
-                  <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <th style={{ padding: '12px 0', width: '40%' }}>Measured Curvature</th>
-                    <td style={{ padding: '12px 0', fontFamily: 'monospace' }}>{results.curvature.toFixed(1)}°</td>
-                  </tr>
-                  <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <th style={{ padding: '12px 0' }}>Straightness Index</th>
-                    <td style={{ padding: '12px 0' }}>{results.straightnessIndex.toFixed(0)} / 100</td>
-                  </tr>
-                  <tr>
-                    <th style={{ padding: '12px 0' }}>Classification</th>
-                    <td style={{ padding: '12px 0', fontWeight: 'bold' }}>{results.classification}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-light)', marginTop: '12px', fontStyle: 'italic' }}>
+              <div className="table-responsive">
+                <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.92rem' }}>
+                  <tbody>
+                    <tr>
+                      <th style={{ padding: '10px 12px', width: '45%' }}>Measured Curvature</th>
+                      <td style={{ padding: '10px 12px', fontFamily: 'monospace' }}>{results.curvature.toFixed(1)}°</td>
+                    </tr>
+                    <tr>
+                      <th style={{ padding: '10px 12px' }}>Straightness Index</th>
+                      <td style={{ padding: '10px 12px' }}>{results.straightnessIndex.toFixed(0)} / 100</td>
+                    </tr>
+                    <tr>
+                      <th style={{ padding: '10px 12px' }}>Classification</th>
+                      <td style={{ padding: '10px 12px', fontWeight: 'bold', color: 'var(--gov-blue)' }}>{results.classification}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-light)', marginTop: '8px', fontStyle: 'italic' }}>
                 * NOTE: Measurements are IMAGE-DERIVED estimations and rely on algorithmic heuristics.
               </div>
             </OfficialCard>
 
             <OfficialCard title="Section 06: Ripeness & Colour Assessment">
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-                <tbody>
-                  <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <th style={{ padding: '12px 0', width: '40%' }}>Estimated Ripeness</th>
-                    <td style={{ padding: '12px 0' }}>{results.ripeness.toFixed(1)}%</td>
-                  </tr>
-                  <tr>
-                    <th style={{ padding: '12px 0' }}>Ripeness Stage</th>
-                    <td style={{ padding: '12px 0' }}>{results.peelAssessment}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-light)', marginTop: '12px', fontStyle: 'italic' }}>
+              <div className="table-responsive">
+                <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.92rem' }}>
+                  <tbody>
+                    <tr>
+                      <th style={{ padding: '10px 12px', width: '45%' }}>Estimated Ripeness</th>
+                      <td style={{ padding: '10px 12px' }}>{results.ripeness.toFixed(1)}%</td>
+                    </tr>
+                    <tr>
+                      <th style={{ padding: '10px 12px' }}>Ripeness Stage</th>
+                      <td style={{ padding: '10px 12px', fontWeight: 'bold' }}>{results.peelAssessment}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-light)', marginTop: '8px', fontStyle: 'italic' }}>
                 * NOTE: This is an AI/IMAGE-ASSISTED ESTIMATION.
               </div>
             </OfficialCard>
@@ -339,15 +343,15 @@ export function AnalysisEngine({ bananaId, photoUrl }: { bananaId: string, photo
 
         {traceStages.length > 0 && (
           <OfficialCard title="Digital Measurement Trace">
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {traceStages.map((trace, idx) => (
-                <div key={idx} style={{ display: 'flex', gap: '16px', alignItems: 'center', border: '1px solid var(--border-color)', padding: '12px' }}>
-                  <div style={{ width: '150px' }}>
-                    <img src={trace.dataUrl} alt={trace.name} style={{ width: '100%', border: '1px solid #ccc' }} />
+                <div key={idx} style={{ display: 'flex', gap: '14px', alignItems: 'center', border: '1px solid var(--border-color)', padding: '10px', borderRadius: 'var(--radius-md)', flexWrap: 'wrap' }}>
+                  <div style={{ width: '130px', minWidth: '100px' }}>
+                    <img src={trace.dataUrl} alt={trace.name} style={{ width: '100%', border: '1px solid #ccc', borderRadius: '2px' }} />
                   </div>
-                  <div>
-                    <div style={{ fontSize: '0.8rem', color: 'var(--text-light)' }}>STAGE 0{idx + 1}</div>
-                    <div style={{ fontWeight: 'bold', color: 'var(--gov-blue)' }}>{trace.name}</div>
+                  <div style={{ flex: 1, minWidth: '140px' }}>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-light)' }}>STAGE 0{idx + 1}</div>
+                    <div style={{ fontWeight: 'bold', color: 'var(--gov-blue)', fontSize: '0.9rem' }}>{trace.name}</div>
                   </div>
                 </div>
               ))}
@@ -357,25 +361,25 @@ export function AnalysisEngine({ bananaId, photoUrl }: { bananaId: string, photo
       </div>
 
       {/* Right Column: Actions & Log */}
-      <div style={{ flex: '1 1 300px', display: 'flex', flexDirection: 'column', gap: '32px' }}>
+      <div style={{ flex: '1 1 280px', minWidth: 0, width: '100%', display: 'flex', flexDirection: 'column', gap: '24px' }}>
         <OfficialCard title="Quick Actions">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             <button 
               onClick={runPipeline}
               disabled={!cvLoaded || status === 'PROCESSING IMAGE' || status === 'DETECTING BANANA' || status === 'EXTRACTING CONTOUR' || status === 'CALCULATING CURVATURE'}
-              style={{ display: 'block', width: '100%', padding: '12px', backgroundColor: 'var(--gov-blue)', color: '#fff', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: cvLoaded ? 'pointer' : 'wait', opacity: cvLoaded ? 1 : 0.7 }}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', padding: '12px', backgroundColor: 'var(--gov-blue)', color: '#fff', border: 'none', borderRadius: 'var(--radius-md)', fontWeight: 'bold', cursor: cvLoaded ? 'pointer' : 'wait', opacity: cvLoaded ? 1 : 0.7, minHeight: '44px', fontSize: '0.92rem' }}
             >
               {cvLoaded ? 'RUN ANALYSIS ENGINE' : 'INITIALIZING ENGINE...'}
             </button>
             <button 
               onClick={() => router.push(`/registry/${bananaId}/analysis/curvature`)}
-              style={{ display: 'block', width: '100%', padding: '12px', backgroundColor: '#e6f0ff', color: 'var(--gov-blue)', border: '2px solid var(--gov-blue)', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', padding: '12px', backgroundColor: '#e6f0ff', color: 'var(--gov-blue)', border: '2px solid var(--gov-blue)', borderRadius: 'var(--radius-md)', fontWeight: 'bold', cursor: 'pointer', minHeight: '44px', fontSize: '0.92rem' }}
             >
               🍌 LAUNCH CURVATURE CHECKER
             </button>
             <button 
               onClick={() => router.push(`/registry/${bananaId}`)}
-              style={{ display: 'block', width: '100%', padding: '12px', backgroundColor: 'transparent', color: 'var(--gov-blue)', border: '2px solid var(--border-color)', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', padding: '12px', backgroundColor: 'transparent', color: 'var(--gov-blue)', border: '2px solid var(--border-color)', borderRadius: 'var(--radius-md)', fontWeight: 'bold', cursor: 'pointer', minHeight: '44px', fontSize: '0.92rem' }}
             >
               RETURN TO PROFILE
             </button>
@@ -383,7 +387,7 @@ export function AnalysisEngine({ bananaId, photoUrl }: { bananaId: string, photo
         </OfficialCard>
 
         <OfficialCard title="Processing Pipeline">
-          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.9rem' }}>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.88rem' }}>
             <li>{traceStages.length >= 1 ? '✅' : '⏳'} Image Validated</li>
             <li>{traceStages.length >= 2 ? '✅' : '⏳'} Banana Detected</li>
             <li>{traceStages.length >= 2 ? '✅' : '⏳'} Segmentation Completed</li>

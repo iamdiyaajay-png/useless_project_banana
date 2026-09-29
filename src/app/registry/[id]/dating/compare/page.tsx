@@ -17,7 +17,7 @@ export default async function ComparePage({ params }: { params: Promise<{ id: st
   const partners = await prisma.foodPartner.findMany();
 
   return (
-    <div>
+    <div style={{ width: '100%' }}>
       <Link href={`/registry/${id}/dating/dashboard`} style={{ display: 'inline-block', marginBottom: '24px', color: 'var(--gov-blue)', textDecoration: 'none', fontWeight: 'bold' }}>
         ← Back to Matches
       </Link>

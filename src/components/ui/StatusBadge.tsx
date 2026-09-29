@@ -25,7 +25,8 @@ export function StatusBadge({ status }: { status: string }) {
       textTransform: 'uppercase',
       color,
       backgroundColor: bg,
-      border: `1px solid ${color}`
+      border: `1px solid ${color}`,
+      whiteSpace: 'nowrap'
     }}>
       {status}
     </span>

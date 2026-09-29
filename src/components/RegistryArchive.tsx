@@ -48,15 +48,15 @@ export default function RegistryArchive() {
   };
 
   return (
-    <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap' }}>
+    <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', width: '100%', minWidth: 0 }}>
       
       {/* Sidebar: Filters */}
-      <div style={{ flex: '1 1 300px' }}>
+      <div style={{ flex: '1 1 280px', minWidth: 0, width: '100%' }}>
         <OfficialCard title="Archive Search & Filter">
           <form onSubmit={handleSearch} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             
             <div>
-              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-light)', textTransform: 'uppercase', marginBottom: '8px' }}>
+              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-light)', textTransform: 'uppercase', marginBottom: '8px', fontWeight: 600 }}>
                 Search Query
               </label>
               <input 
@@ -64,18 +64,18 @@ export default function RegistryArchive() {
                 placeholder="ID, Name, Alias, Origin..." 
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                style={{ width: '100%', padding: '10px', border: '1px solid var(--border-color)', borderRadius: '4px' }}
+                style={{ width: '100%', padding: '12px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', minHeight: '44px', fontSize: '1rem' }}
               />
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-light)', textTransform: 'uppercase', marginBottom: '8px' }}>
+              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-light)', textTransform: 'uppercase', marginBottom: '8px', fontWeight: 600 }}>
                 Variety Filter
               </label>
               <select 
                 value={variety} 
                 onChange={(e) => setVariety(e.target.value)}
-                style={{ width: '100%', padding: '10px', border: '1px solid var(--border-color)', borderRadius: '4px' }}
+                style={{ width: '100%', padding: '12px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', minHeight: '44px', fontSize: '1rem' }}
               >
                 <option value="">ALL VARIETIES</option>
                 <option value="Musa paradisiaca">Musa paradisiaca</option>
@@ -85,13 +85,13 @@ export default function RegistryArchive() {
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-light)', textTransform: 'uppercase', marginBottom: '8px' }}>
+              <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-light)', textTransform: 'uppercase', marginBottom: '8px', fontWeight: 600 }}>
                 Status Filter
               </label>
               <select 
                 value={status} 
                 onChange={(e) => setStatus(e.target.value)}
-                style={{ width: '100%', padding: '10px', border: '1px solid var(--border-color)', borderRadius: '4px' }}
+                style={{ width: '100%', padding: '12px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', minHeight: '44px', fontSize: '1rem' }}
               >
                 <option value="">ALL STATUSES</option>
                 <option value="ACTIVE">ACTIVE</option>
@@ -100,18 +100,45 @@ export default function RegistryArchive() {
               </select>
             </div>
 
-            <button type="submit" style={{ padding: '12px', backgroundColor: 'var(--gov-blue)', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+            <button 
+              type="submit" 
+              style={{ 
+                padding: '14px', 
+                backgroundColor: 'var(--gov-blue)', 
+                color: 'white', 
+                border: 'none', 
+                borderRadius: 'var(--radius-md)', 
+                cursor: 'pointer', 
+                fontWeight: 'bold',
+                minHeight: '44px',
+                fontSize: '0.95rem',
+                transition: 'background-color var(--transition-fast)'
+              }}
+            >
               SUBMIT SEARCH
             </button>
-            <button type="button" onClick={() => { setQuery(''); setVariety(''); setStatus(''); setTimeout(fetchSpecimens, 0); }} style={{ padding: '12px', backgroundColor: '#f0f0f0', color: 'var(--text-dark)', border: '1px solid var(--border-color)', borderRadius: '4px', cursor: 'pointer' }}>
-              RESET
+            <button 
+              type="button" 
+              onClick={() => { setQuery(''); setVariety(''); setStatus(''); setTimeout(fetchSpecimens, 0); }} 
+              style={{ 
+                padding: '12px', 
+                backgroundColor: '#f8fafc', 
+                color: 'var(--text-dark)', 
+                border: '1px solid var(--border-color)', 
+                borderRadius: 'var(--radius-md)', 
+                cursor: 'pointer',
+                minHeight: '44px',
+                fontSize: '0.9rem'
+              }}
+            >
+              RESET FILTERS
             </button>
           </form>
         </OfficialCard>
       </div>
 
       {/* Main Content: Results */}
-      <div style={{ flex: '3 1 600px' }}>
+      <div style={{ flex: '3 1 540px', minWidth: 0, width: '100%' }}>
         <OfficialCard title={`Registry Archive (${loading ? '...' : specimens.length})`}>
           {loading ? (
             <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-light)' }}>
@@ -122,38 +149,44 @@ export default function RegistryArchive() {
               No specimens matched the given criteria.
             </div>
           ) : (
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-              <thead>
-                <tr style={{ borderBottom: '2px solid var(--border-color)' }}>
-                  <th style={{ padding: '12px', width: '60px' }}>Photo</th>
-                  <th style={{ padding: '12px' }}>Registration No.</th>
-                  <th style={{ padding: '12px' }}>Official Name</th>
-                  <th style={{ padding: '12px' }}>Origin</th>
-                  <th style={{ padding: '12px' }}>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {specimens.map(b => (
-                  <tr key={b.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                    <td style={{ padding: '12px' }}>
-                      <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: '#eee', overflow: 'hidden', border: '1px solid var(--border-color)' }}>
-                        {b.photo ? <img src={b.photo} alt={b.officialName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', fontSize: '0.6rem', color: '#999' }}>N/A</span>}
-                      </div>
-                    </td>
-                    <td style={{ padding: '12px', fontFamily: 'monospace' }}>
-                      <Link href={`/registry/${b.id}`} style={{ fontWeight: 'bold' }}>
-                        {b.registrationNumber}
-                      </Link>
-                    </td>
-                    <td style={{ padding: '12px' }}>{b.officialName}</td>
-                    <td style={{ padding: '12px' }}>{b.origin || 'Unknown'}</td>
-                    <td style={{ padding: '12px' }}>
-                      <StatusBadge status={b.registryStatus} />
-                    </td>
+            <div className="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th style={{ width: '60px' }}>Photo</th>
+                    <th>Registration No.</th>
+                    <th>Official Name</th>
+                    <th>Origin</th>
+                    <th>Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {specimens.map(b => (
+                    <tr key={b.id}>
+                      <td>
+                        <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: '#eee', overflow: 'hidden', border: '1px solid var(--border-color)' }}>
+                          {b.photo ? (
+                            <img src={b.photo} alt={b.officialName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          ) : (
+                            <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', fontSize: '0.6rem', color: '#999' }}>N/A</span>
+                          )}
+                        </div>
+                      </td>
+                      <td style={{ fontFamily: 'monospace' }}>
+                        <Link href={`/registry/${b.id}`} style={{ fontWeight: 'bold' }}>
+                          {b.registrationNumber}
+                        </Link>
+                      </td>
+                      <td style={{ fontWeight: 500 }}>{b.officialName}</td>
+                      <td>{b.origin || 'Unknown'}</td>
+                      <td>
+                        <StatusBadge status={b.registryStatus} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </OfficialCard>
       </div>

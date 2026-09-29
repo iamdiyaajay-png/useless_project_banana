@@ -45,64 +45,64 @@ export function CompatibilityActions({ bananaId, partnerId, partnerName }: { ban
   if (!bgCheckDone) {
     return (
       <OfficialCard title="Compatibility Services">
-        <p style={{ color: 'var(--text-light)', marginBottom: '24px' }}>
+        <p style={{ color: 'var(--text-light)', marginBottom: '20px', fontSize: '0.9rem' }}>
           A formal background check must be completed before compatibility can be assessed and a match can be accepted.
         </p>
         <button 
           onClick={handleBackgroundCheck} 
           disabled={calculating}
-          style={{ width: '100%', padding: '16px', backgroundColor: 'var(--gov-blue)', color: '#fff', border: 'none', borderRadius: '4px', fontSize: '1rem', fontWeight: 'bold', cursor: calculating ? 'not-allowed' : 'pointer' }}
+          style={{ width: '100%', padding: '14px', backgroundColor: 'var(--gov-blue)', color: '#fff', border: 'none', borderRadius: 'var(--radius-md)', fontSize: '0.95rem', fontWeight: 'bold', cursor: calculating ? 'not-allowed' : 'pointer', minHeight: '48px', transition: 'background-color var(--transition-fast)' }}
         >
           {calculating ? 'RUNNING BACKGROUND CHECK...' : 'RUN BACKGROUND CHECK 🔍'}
         </button>
-        {error && <div style={{ color: 'var(--status-red)', marginTop: '16px' }}>{error}</div>}
+        {error && <div style={{ color: 'var(--status-red)', marginTop: '14px', fontSize: '0.85rem' }}>{error}</div>}
       </OfficialCard>
     );
   }
 
   return (
     <OfficialCard title="💘 MATCHING ASSESSMENT">
-      <div style={{ backgroundColor: '#fff', border: '2px solid var(--border-color)', padding: '24px', borderRadius: '4px', textAlign: 'center', marginBottom: '24px' }}>
-        <div style={{ fontSize: '0.9rem', color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '1px' }}>COMPATIBILITY SCORE</div>
-        <div style={{ fontSize: '4rem', fontWeight: 'bold', color: result.score > 80 ? 'var(--status-green)' : result.score > 50 ? 'var(--status-warning)' : 'var(--status-red)' }}>
+      <div style={{ backgroundColor: '#fff', border: '2px solid var(--border-color)', padding: '20px', borderRadius: 'var(--radius-md)', textAlign: 'center', marginBottom: '20px' }}>
+        <div style={{ fontSize: '0.8rem', color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 600 }}>COMPATIBILITY SCORE</div>
+        <div style={{ fontSize: 'clamp(2.5rem, 6vw, 3.5rem)', fontWeight: 'bold', color: result.score > 80 ? 'var(--status-green)' : result.score > 50 ? 'var(--status-warning)' : 'var(--status-red)', lineHeight: 1.1 }}>
           {result.score}%
         </div>
         
-        <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--border-color)', paddingTop: '16px' }}>
+        <div style={{ marginTop: '14px', display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--border-color)', paddingTop: '12px', fontSize: '0.9rem' }}>
            <span style={{ color: 'var(--text-light)' }}>Risk Level</span>
            <strong style={{ color: result.risk === 'LOW' ? 'var(--status-green)' : result.risk === 'MODERATE' ? 'var(--status-warning)' : 'var(--status-red)' }}>{result.risk}</strong>
         </div>
       </div>
 
-      <div style={{ marginBottom: '24px' }}>
-        <h4 style={{ margin: '0 0 8px 0', borderBottom: '1px solid var(--border-color)', paddingBottom: '4px' }}>DETERMINISTIC BREAKDOWN</h4>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', padding: '4px 0' }}><span>Traditional Pairing</span> <strong>{result.breakdown.traditional}%</strong></div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', padding: '4px 0' }}><span>Taste Chemistry</span> <strong>{result.breakdown.taste}%</strong></div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', padding: '4px 0' }}><span>Texture Alignment</span> <strong>{result.breakdown.texture}%</strong></div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', padding: '4px 0' }}><span>Pairing Frequency</span> <strong>{result.breakdown.frequency}%</strong></div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', padding: '4px 0' }}><span>Partner Stability</span> <strong>{result.breakdown.stability}%</strong></div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', padding: '4px 0' }}><span>History Score</span> <strong>{result.breakdown.history}%</strong></div>
+      <div style={{ marginBottom: '20px' }}>
+        <h4 style={{ margin: '0 0 8px 0', borderBottom: '1px solid var(--border-color)', paddingBottom: '4px', fontSize: '0.9rem' }}>DETERMINISTIC BREAKDOWN</h4>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', padding: '4px 0' }}><span>Traditional Pairing</span> <strong>{result.breakdown.traditional}%</strong></div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', padding: '4px 0' }}><span>Taste Chemistry</span> <strong>{result.breakdown.taste}%</strong></div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', padding: '4px 0' }}><span>Texture Alignment</span> <strong>{result.breakdown.texture}%</strong></div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', padding: '4px 0' }}><span>Pairing Frequency</span> <strong>{result.breakdown.frequency}%</strong></div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', padding: '4px 0' }}><span>Partner Stability</span> <strong>{result.breakdown.stability}%</strong></div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', padding: '4px 0' }}><span>History Score</span> <strong>{result.breakdown.history}%</strong></div>
       </div>
 
-      <div style={{ backgroundColor: '#f5f5f5', padding: '16px', borderRadius: '4px', fontSize: '0.9rem', fontStyle: 'italic', marginBottom: '24px', lineHeight: '1.5' }}>
+      <div style={{ backgroundColor: '#f8fafc', padding: '14px', borderRadius: 'var(--radius-md)', fontSize: '0.85rem', fontStyle: 'italic', marginBottom: '20px', lineHeight: '1.5' }}>
         "{result.explanation} {result.riskReason}"
       </div>
 
-      <div style={{ borderTop: '2px solid var(--gov-blue)', paddingTop: '16px', marginBottom: '24px', textAlign: 'center' }}>
-        <div style={{ fontSize: '0.8rem', color: 'var(--gov-blue)', fontWeight: 'bold' }}>SYSTEM VERDICT</div>
-        <div style={{ fontSize: '1.2rem', fontWeight: 'bold', margin: '4px 0' }}>{result.verdict}</div>
-        <div style={{ fontSize: '0.9rem', color: 'var(--text-light)' }}>Recommendation: {result.recommendation}</div>
+      <div style={{ borderTop: '2px solid var(--gov-blue)', paddingTop: '14px', marginBottom: '20px', textAlign: 'center' }}>
+        <div style={{ fontSize: '0.75rem', color: 'var(--gov-blue)', fontWeight: 'bold' }}>SYSTEM VERDICT</div>
+        <div style={{ fontSize: '1.1rem', fontWeight: 'bold', margin: '2px 0' }}>{result.verdict}</div>
+        <div style={{ fontSize: '0.82rem', color: 'var(--text-light)' }}>Recommendation: {result.recommendation}</div>
       </div>
 
-      <div style={{ display: 'flex', gap: '16px' }}>
-        <button onClick={handleReject} style={{ flex: 1, padding: '16px', backgroundColor: '#fff', color: 'var(--status-red)', border: '2px solid var(--status-red)', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}>
+      <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+        <button onClick={handleReject} style={{ flex: '1 1 120px', padding: '12px', backgroundColor: '#fff', color: 'var(--status-red)', border: '2px solid var(--status-red)', borderRadius: 'var(--radius-md)', fontWeight: 'bold', cursor: 'pointer', minHeight: '44px', fontSize: '0.88rem' }}>
           REJECT MATCH ✖
         </button>
-        <button onClick={handleAccept} style={{ flex: 1, padding: '16px', backgroundColor: 'var(--status-green)', color: '#fff', border: 'none', borderRadius: '4px', fontWeight: 'bold', cursor: 'pointer' }}>
+        <button onClick={handleAccept} style={{ flex: '1 1 120px', padding: '12px', backgroundColor: 'var(--status-green)', color: '#fff', border: 'none', borderRadius: 'var(--radius-md)', fontWeight: 'bold', cursor: 'pointer', minHeight: '44px', fontSize: '0.88rem' }}>
           ACCEPT MATCH ✓
         </button>
       </div>
-      {error && <div style={{ color: 'var(--status-red)', marginTop: '16px', textAlign: 'center' }}>{error}</div>}
+      {error && <div style={{ color: 'var(--status-red)', marginTop: '12px', textAlign: 'center', fontSize: '0.85rem' }}>{error}</div>}
     </OfficialCard>
   );
 }

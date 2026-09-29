@@ -1,44 +1,74 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export function Sidebar() {
-  const linkStyle = {
-    display: 'block',
-    padding: '12px 16px',
-    color: 'var(--text-dark)',
-    textDecoration: 'none',
-    borderBottom: '1px solid var(--border-color)',
-    fontWeight: '500'
-  };
+  const pathname = usePathname();
+
+  const adminLinks = [
+    { href: '/', label: 'Dashboard', icon: '🏛️', exact: true },
+    { href: '/registry', label: 'Registry Archive', icon: '🗄️', exact: false },
+    { href: '/register', label: 'Register New Entity', icon: '🍌', exact: false },
+    { href: '/verify', label: 'Verify Document', icon: '🔐', exact: false },
+    { href: '/audit', label: 'Audit Logs', icon: '📜', exact: false },
+  ];
+
+  const toolLinks = [
+    { href: '/analysis/curvature', label: 'Curvature Checker', icon: '📐', exact: false },
+    { href: '/analysis', label: 'Analysis Engine', icon: '🔬', exact: true },
+    { href: '/dating', label: 'Dating Portal', icon: '💘', exact: false },
+    { href: '/documents', label: 'Document Vault', icon: '📁', exact: false },
+  ];
 
   return (
-    <aside style={{
-      width: '250px',
-      backgroundColor: '#fff',
-      borderRight: '1px solid var(--border-color)',
-      minHeight: 'calc(100vh - 80px)', // Adjust based on header
-      padding: '20px 0'
-    }}>
-      <div style={{ padding: '0 20px', marginBottom: '20px', color: 'var(--text-light)', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
-        Administration
+    <aside className="app-sidebar" aria-label="Desktop Sidebar Navigation">
+      <div className="sidebar-section-header">
+        <span>ADMINISTRATION</span>
       </div>
-      <nav>
-        <Link href="/" style={linkStyle}>Dashboard</Link>
-        <Link href="/register" style={linkStyle}>Register New Entity</Link>
-        <Link href="/verify" style={linkStyle}>Verify Document</Link>
-        <Link href="/audit" style={linkStyle}>Audit Logs</Link>
+      <nav className="sidebar-nav">
+        {adminLinks.map((link) => {
+          const isActive = link.exact ? pathname === link.href : pathname.startsWith(link.href);
+          return (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`sidebar-nav-link ${isActive ? 'active' : ''}`}
+            >
+              <span className="sidebar-nav-icon">{link.icon}</span>
+              <span className="sidebar-nav-text">{link.label}</span>
+            </Link>
+          );
+        })}
       </nav>
 
-      <div style={{ padding: '0 20px', marginTop: '32px', marginBottom: '20px', color: 'var(--text-light)', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
-        Analysis Tools
+      <div className="sidebar-section-header" style={{ marginTop: '24px' }}>
+        <span>REGISTRY TOOLS</span>
       </div>
-      <nav>
-        <Link href="/analysis/curvature" style={linkStyle}>Curvature Checker</Link>
+      <nav className="sidebar-nav">
+        {toolLinks.map((link) => {
+          const isActive = link.exact ? pathname === link.href : pathname.startsWith(link.href);
+          return (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`sidebar-nav-link ${isActive ? 'active' : ''}`}
+            >
+              <span className="sidebar-nav-icon">{link.icon}</span>
+              <span className="sidebar-nav-text">{link.label}</span>
+            </Link>
+          );
+        })}
       </nav>
-      <div style={{ marginTop: 'auto', paddingTop: '40px', paddingBottom: '20px', textAlign: 'center' }}>
-        <Link href="/admin" style={{ fontSize: '0.75rem', color: 'var(--text-light)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-          🔒 Staff / Admin Login
+
+      <div className="sidebar-footer">
+        <Link href="/admin" className="sidebar-admin-btn">
+          🔒 Staff / Admin Enclave
         </Link>
+        <div className="sidebar-version-badge">
+          System v2.4 • National Registry
+        </div>
       </div>
     </aside>
   );

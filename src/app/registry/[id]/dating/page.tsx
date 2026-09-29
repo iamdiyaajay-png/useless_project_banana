@@ -27,7 +27,7 @@ export default async function DatingIntakePage({ params }: { params: Promise<{ i
   };
 
   return (
-    <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+    <div style={{ maxWidth: '600px', margin: '0 auto', width: '100%' }}>
       <OfficialCard title="Dating Profile Activation">
         <div style={{ backgroundColor: 'var(--status-warning-light)', border: '1px solid var(--status-warning)', padding: '16px', borderRadius: '4px', marginBottom: '24px' }}>
           <strong>NOTICE:</strong> By activating this profile, you consent to have this specimen's visual and physical traits assessed for culinary chemistry.
